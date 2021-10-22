@@ -1,45 +1,53 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Đăng nhập hệ thống</title>
-        {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png')}}" /> --}}
-        <link rel="stylesheet" href="{{asset('vendors/bootstrap-5.1.2-dist/css/bootstrap.css')}}">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-        @stack('link-css')
-        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-        @stack('css')
-    </head>
-<body>
-    <header>
-        <div class="container">
-            @include('frontend.layouts._header')
+@extends('backend.auth.main')
+
+@section('title')
+Đăng nhập hệ thống
+@endsection
+@push('css')
+    <style>
+        .toast{
+            position: fixed;
+            top: 5%;
+            right: 5%;
+        }
+    </style>
+@endpush
+@section('content')
+    <h1 class="text-center mt-4">
+        <strong>ĐĂNG NHẬP HỆ THỐNG</strong>
+    </h1>
+    <form action="{{url('/admin/login')}}" method="post" class="my-5 p-4 mx-auto" style="width:400px; background-color: white" >
+        @csrf
+        @if (Session::has('error'))
+            <div class="text-danger">{{Session::get('error')}}</div>  
+        @endif
+        <div class="form-group">
+            <label for="username" style="font-size: 18px; margin-bottom: 6px">Username:</label>
+            <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{old('username')}}">
+            @error('username')
+                <span class="invalid-feedback">{{$message}}</span>
+            @enderror
         </div>
-    </header>
-    <section>
-        heelo
-    </section>
-    <footer>
-        <div class="container">
-            @include('frontend.layouts._footer')
+        <div class="form-group mt-3">
+            <label for="password" style="font-size: 18px; margin-bottom: 6px">Password:</label>
+            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror">
+            @error('password')
+                <span class="invalid-feedback">{{$message}}</span>
+            @enderror
         </div>
-    </footer>
-
-
-
-<script src="{{asset('vendors/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('vendors/bootstrap-5.1.2-dist/js/bootstrap.js')}}"></script>
-<script src="{{asset('vendors/bootstrap-5.1.2-dist/js/bootstrap.bundle.js')}}"></script>
-{{-- <script src="{{asset('vendors/sweetalert/dist/sweetalert.min.js')}}"></script> --}}
-<script src="{{ mix('assets/js/app.js') }}"></script>
-@stack('link-js')
-
-@stack('js')
-</body>
-</html>
+        <a href="{{url('/admin/forgot-password')}}">Quên mật khẩu?</a> <br>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-3">ĐĂNG NHẬP</button>
+        </div>
+    </form>
+    @if(Session::has('status'))
+        <div class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{Session::get('status')}}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>   
+    @endif
+@endsection

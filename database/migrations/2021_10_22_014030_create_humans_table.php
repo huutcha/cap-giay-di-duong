@@ -22,12 +22,14 @@ class CreateHumansTable extends Migration
             $table->string('hometown');
             $table->string('phone');
             $table->string('cccd');
-            $table->string('email');
-            $table->date('email_verified_at')->nullable();
+            $table->string('avatar');
+            
             $table->string('address')->nullable();
             $table->unsignedBigInteger('ward_id')->nullable();
+            $table->unsignedBigInteger('account_id')->nullable();
             $table->timestamps();
             $table->foreign('ward_id')->references('id')->on('wards')->onDelete('set null');
+            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('set null');
 
         });
     }

@@ -18,10 +18,11 @@ class CreateAccountsTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->integer('role');
-            $table->unsignedBigInteger('human_id');
+            $table->string('email');
+            $table->rememberToken();
+            $table->date('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('human_id')->references('id')->on('humans');
         });
     }
 

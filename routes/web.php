@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthenticateController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +18,19 @@ use App\Http\Controllers\AuthenticateController;
 
 Route::get('/', [ApplicationController::class, 'create']);
 Route::prefix('admin')->group(function () {
-    Route::get('/login', [AuthenticateController::class, 'showLogin']);
+    Route::get('/login', [AuthenticateController::class, 'loginForm'])->name('login');
+    Route::post('/login', [AuthenticateController::class, 'login']);
+    Route::get('/forgot-password', [AuthenticateController::class, 'forgotPasswordForm']);
+    Route::post('/forgot-password', [AuthenticateController::class, 'forgotPassword']);
+    Route::get('/reset-password/{token}', [AuthenticateController::class, 'resetForm'])->name('password.reset');
+    Route::put('/reset-password', [AuthenticateController::class, 'reset']);
+    Route::middleware('auth')->group(function () {
+        Route::get('/', function () {
+            return view('backend.index');
+        });
+        Route::get('/logout', function () {
+            Auth::logout();
+            return redirect('/admin/login');
+        });
+    });
 });
