@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    public function index(){
+    public function create(){
         return view('frontend.application.step1');
     }
 }

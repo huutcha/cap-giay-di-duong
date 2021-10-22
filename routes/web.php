@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AuthenticateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +15,7 @@ use App\Http\Controllers\ApplicationController;
 |
 */
 
-Route::get('/', [ApplicationController::class, 'index']);
+Route::get('/', [ApplicationController::class, 'create']);
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AuthenticateController::class, 'showLogin']);
+});
