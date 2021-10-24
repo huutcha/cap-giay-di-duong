@@ -14,11 +14,10 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    require('admin-lte/plugins/bootstrap/js/bootstrap')
 
     // AdminLTE code here.
     require('admin-lte');
-    require('admin-lte/dist/js/demo')
 } catch (e) {}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -36,4 +35,3 @@ try {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-require('admin-lte');

@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\Admin\AuthenticateController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -28,9 +29,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', function () {
             return view('backend.index');
         });
-        Route::get('/logout', function () {
-            Auth::logout();
-            return redirect('/admin/login');
-        });
+        Route::get('/logout', [AuthenticateController::class, 'logout']);
+        Route::get('/profile', [UserController::class, 'showProfile']);
+        Route::post('/change-password', [UserController::class, 'changePassword']);
     });
 });
