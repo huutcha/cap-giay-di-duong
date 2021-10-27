@@ -17,4 +17,13 @@ class Ward extends Model
     public function human () {
         return $this->hasMany(Human::class);
     }
+
+    public function getActiveTextAttribute () {
+        if ($this->active == 0){
+            return "Chưa kích hoạt";
+        }
+        if ($this->active == 1){
+            return "Đã kích hoạt";
+        }
+    }
 }

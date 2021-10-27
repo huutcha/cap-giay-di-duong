@@ -15,6 +15,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('admin-lte/plugins/bootstrap/js/bootstrap')
+    require('admin-lte/plugins/select2/js/select2.full')
 
     // AdminLTE code here.
     require('admin-lte');

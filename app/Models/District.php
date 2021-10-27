@@ -13,4 +13,13 @@ class District extends Model
     public function ward () {
         return $this->hasMany(Ward::class);
     }
+
+    public function getActiveTextAttribute () {
+        if ($this->active == 0){
+            return "Chưa kích hoạt";
+        }
+        if ($this->active == 1){
+            return "Đã kích hoạt";
+        }
+    }
 }

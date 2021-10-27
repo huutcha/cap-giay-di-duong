@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Admin\AuthenticateController;
 use App\Http\Controllers\Admin\UserController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\UnitController;
+use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\WardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +34,18 @@ Route::prefix('admin')->group(function () {
         Route::get('/logout', [AuthenticateController::class, 'logout']);
         Route::get('/profile', [UserController::class, 'showProfile']);
         Route::post('/change-password', [UserController::class, 'changePassword']);
+        Route::get('/unit', [UnitController::class, 'index']);
+        Route::put('/district', [DistrictController::class, 'update']);
+        Route::put('/ward', [WardController::class, 'update']);
+        Route::get('/district/{id}/wards', [WardController::class, 'index']);
+        Route::get('/district/{id}/wards/active-all', [WardController::class, 'activeAll']);
+
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users/create', [UserController::class, 'create']);
+        Route::post('/check-username-existed', [UserController::class, 'checkUserExisted']);
+        Route::post('/users', [UserController::class, 'store']);
+        Route::get('/users/{id}', [UserController::class, 'edit']);
+        Route::put('/users/{id}', [UserController::class, 'update']);
+        Route::delete('/users', [UserController::class, 'destroy']);
     });
 });

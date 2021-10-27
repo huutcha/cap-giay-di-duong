@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Human extends Model
 {
     use HasFactory;
-    protected $fillable = ['fname', 'lname'];
+    protected $fillable = ['fname', 'lname', 'cccd', 'phone', 'gender', 'dob', 'hometown', 'address', 'account_id', 'avatar', 'ward_id'];
 
     public function account () {
         return $this->belongsTo(Account::class);

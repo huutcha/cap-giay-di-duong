@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Account extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillable = ['username', 'password', 'role'];
+    protected $fillable = ['username', 'password', 'role', 'email'];
 
     public function human () {
         return $this->hasOne(Human::class);
@@ -45,5 +46,14 @@ class Account extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
+    static function getAccountsByDistrict ($id) {
+        $result = collect();
+        foreach (static::all() as $account){
+            if ($account->human->ward->district->id == $id && $account->role == 2) {
+                $result->push($account);
+            }
+        }
+        return $result;
+    }
 
 }

@@ -3,7 +3,7 @@
 Thông tin cá nhân
 @endsection
 @section('content-title')
-    Profile
+    Hồ sơ
 @endsection
 @section('content')
     <!-- Main content -->

@@ -38,7 +38,7 @@
               <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
               <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="{{url('/admin/unit')}}" class="nav-link">
                     <i class="nav-icon fas fa-university"></i>
                       <p>
                           Đơn vị
@@ -46,10 +46,10 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="##" class="nav-link">
+                  <a href="{{url('/admin/users')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                       <p>
-                          Cán bộ quản lý
+                          Quản lý cán bộ
                       </p>
                   </a>
               </li>
