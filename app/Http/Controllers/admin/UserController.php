@@ -99,7 +99,7 @@ class UserController extends Controller
                 Storage::disk('avatars')->delete($user->human->avatar);
             }
             $file->storeAs('', $file->getClientOriginalName(), 'avatars');
-            $user->human->update(['avatar' => $file->getClientOriginalName()]);
+            $user->update(['avatar' => $file->getClientOriginalName()]);
         }
         
         return redirect('/admin/users');

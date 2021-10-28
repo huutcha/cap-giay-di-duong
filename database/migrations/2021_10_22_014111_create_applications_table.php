@@ -18,6 +18,8 @@ class CreateApplicationsTable extends Migration
             $table->unsignedBigInteger('human_id');
             $table->unsignedBigInteger('organ_id');
             $table->string('reason');
+            $table->string('reason_desc');
+            $table->string('email');
             $table->date('duration');
             $table->timestamps();
             $table->softDeletes();

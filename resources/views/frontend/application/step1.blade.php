@@ -2,6 +2,15 @@
 @section('title')
     Đăng ký cấp giấy đi đường
 @endsection
+@push('css')
+    <style>
+        .toast{
+            position: fixed;
+            top: 5%;
+            right: 5%;
+        }
+    </style>
+@endpush
 @section('content')
     <h1 class="text-center my-4">
         <strong>ĐĂNG KÝ CẤP GIẤY ĐI ĐƯỜNG</strong>
@@ -32,6 +41,8 @@
             </div>
         </div>
     </div>
+<form action="{{url('/applications')}}" enctype="multipart/form-data" method="post">
+    @csrf
     {{-- STEP1 --}}
     {{-- STEP1 --}}
     {{-- STEP1 --}}
@@ -42,8 +53,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">Thành phố, tỉnh:</label>
-                        <select name="city" id="city" class="form-control" style=" height: 46px">
-                            <option value="">--Chọn thành phố, tỉnh--</option>
+                        <select id="city" class="form-control" style=" height: 46px">
+                            {{-- <option value="">--Chọn thành phố, tỉnh--</option> --}}
                             <option value="1">Hà Nội</option>
                         </select>
                     </div>
@@ -51,25 +62,26 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">Quận, huyện:</label>
-                        <select name="district" id="district" class="form-control" style=" height: 46px" disabled >
+                        <select id="district" onchange="loadWards($(this).val(), 1)" class="form-control" style=" height: 46px" >
                             <option value="">--Chọn quận, huyện--</option>
-                            <option value="1">Bắc Từ Liêm</option>
+                            @foreach ($districts as $district)
+                                <option value="{{$district->id}}">{{$district->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">Phường, xã:</label>
-                        <select name="ward" id="ward" class="form-control" style=" height: 46px" disabled>
+                        <select name="ward_id" id="ward" class="form-control ward" style=" height: 46px" disabled>
                             <option value="">--Chọn xã, phường--</option>
-                            <option value="1">Thượng Cát</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-end mb-4">
-            <button class="btn btn-success btn-lg" id="step1-next" disabled>Tiếp tục</button>
+            <span class="btn btn-success btn-lg" id="step1-next" disabled>Tiếp tục</span>
         </div>
     </div>
     {{-- STEP2 --}}
@@ -80,18 +92,19 @@
             <span>Chúng tôi cần đúng email của bạn để gửi thông báo kết quả sớm nhất.</span>
         </h1>
         <div class="form-email mx-5" style="margin-bottom: 200px">
+            <h5 class="status"></h5>
             <div class="form-group">
                 <label for="">Nhập email của bạn:</label>
                 <input type="text" name="email" id="email" class="form-control" style="width:500px; height: 46px">
-                <button class="btn btn-primary mt-3 btn-lg" id="send-mail" disabled>Gửi mã</button>
+                <span class="btn btn-primary mt-3 btn-lg" id="send-mail" disabled>Gửi mã</span>
             </div>
             <div class="form-group mt-4">
                 <label for="">Mã xác nhận:</label>
-                <input type="text" name="email-confirm" id="email-confirm" class="form-control" style="width:500px; height: 46px" disabled>
+                <input type="text" id="email-confirm" class="form-control" style="width:500px; height: 46px" disabled>
             </div>
         </div>
         <div class="text-end mb-4">
-            <button class="btn btn-success btn-lg" id="step2-next" disabled>Tiếp tục</button>
+            <span class="btn btn-success btn-lg" id="step2-next" disabled>Tiếp tục</span>
         </div>
     </div>
     {{-- STEP3 --}}
@@ -104,46 +117,60 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-info mx-5" style="margin-bottom: 150px">
-                    <div class="form-group">
-                        <label for="">Họ và tên:</label>
-                        <input type="text" name="fullname" id="" class="form-control" >
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Họ và tên đệm:</label>
+                                <input type="text" name="fname" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Tên:</label>
+                                <input type="text" name="lname" class="form-control" >
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group mt-4">
                         <label for="">Số căn cước công dân:</label>
-                        <input type="text" name="cccd" id="" class="form-control" >
+                        <input type="text" name="cccd" class="form-control" >
                     </div>
                     <div class="form-group mt-4">
                         <label for="">Số điện thoại liên hệ:</label>
-                        <input type="text" name="phone" id="" class="form-control" >
+                        <input type="text" name="phone" class="form-control" >
                     </div>
                     <div class="form-group mt-4">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Giới tính:</label> <br>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" checked id="male" value="1">
+                                    <input class="form-check-input" type="radio" name="gender" checked id="male" value="Nam">
                                     <label class="form-check-label" style="font-size: 18px" for="male">Nam</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="2">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Nữ">
                                     <label class="form-check-label" style="font-size: 18px" for="female">Nữ</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="other" value="3">
+                                    <input class="form-check-input" type="radio" name="gender" id="other" value="Khác">
                                     <label class="form-check-label" style="font-size: 18px" for="other">Khác</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Ngày sinh:</label>
-                                    <input type="date" name="dob" id="" class="form-control">
+                                    <input type="date" name="dob" class="form-control">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group mt-4">
+                        <label for="">Quê quán:</label>
+                        <input type="text" name="hometown" class="form-control" >
+                    </div>
+                    <div class="form-group mt-4">
                         <label for="">Địa chỉ thường trú chi tiết:</label>
-                        <input type="text" name="address" placeholder="Số nhà, hẻm, ngõ, ngách, ..." id="" class="form-control" >
+                        <input type="text" name="address" placeholder="Số nhà, hẻm, ngõ, ngách, ..." class="form-control" >
                     </div>
                 </div>
             </div>
@@ -152,7 +179,7 @@
                     <label for="">Hồ sơ minh chứng:
                         <span>*Bao gồm ảnh chụp CCCD(CMTND) hai mặt, Sổ hộ khẩu...</span>
                     </label>
-                    <input type="file" name="proof-upload" id="proof-upload" class="form-control" multiple>
+                    <input type="file" name="proof-upload[]" id="proof-upload" class="form-control" multiple>
                     <div class="proof-img-container mt-4">
 
                     </div>
@@ -160,7 +187,7 @@
             </div>
         </div>
         <div class="text-end mb-4">
-            <button class="btn btn-success btn-lg" id="step3-next" disabled>Tiếp tục</button>
+            <span class="btn btn-success btn-lg" id="step3-next" disabled>Tiếp tục</span>
         </div>
     </div>
     {{-- STEP4 --}}
@@ -173,7 +200,7 @@
         <div class="form-reason mx-5" style="margin-bottom: 150px">
             <div class="form-group">
                 <label for="">Lý do cấp giấy:</label>
-                <select name="reason" id="" class="form-control" style="width:500px; height: 46px">
+                <select name="reason" class="form-control" style="width:500px; height: 46px">
                     <option value="">--Chọn lí do--</option>
                     <option value="Đi làm">Đi làm</option>
                     <option value="Công nhân viên chức">Công nhân viên chức</option>
@@ -182,24 +209,64 @@
             </div>
             <div class="form-group mt-4">
                 <label for="">Đơn vị công tác:</label>
-                <input type="text" name="work-unit" id="" class="form-control" style="width:500px; height: 46px" >
+                <input type="text" name="work-unit" class="form-control" style="width:500px; height: 46px" >
             </div>
             <div class="form-group mt-4">
-                <label for="">Số ngày xin cấp giấy:</label>
-                <input type="text" name="quantity-day" id="" class="form-control" style="width:500px; height: 46px">
+                <label for="">Địa chỉ đơn vị:</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="" style="font-size: 16px">Quận, huyện</label>
+                            <select onchange="loadWards($(this).val(), 4)" class="form-control">
+                                <option value="">--Chọn quận, huyện--</option>
+                                @foreach ($districts as $district)
+                                    <option value="{{$district->id}}">{{$district->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""  style="font-size: 16px">Phường, xã</label>
+                            <select name="unit-place" class="form-control ward">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="">Hạn xin cấp giấy:</label>
+                <input type="date" name="duration" class="form-control" style="width:500px; height: 46px">
             </div>
             <div class="form-group mt-4">
                 <label for="">Mô tả chi tiết lý do:</label>
-                <textarea name="reason-decs" id="" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="reason_desc" cols="30" rows="10" class="form-control"></textarea>
             </div>
         </div>
         <div class="text-end mb-4">
-            <button class="btn btn-success btn-lg" id="step4-next" disabled>Hoàn thành</button>
+            <button type="submit" class="btn btn-success btn-lg" id="step4-next" disabled>Hoàn thành</button>
         </div>
     </div>
+</form>
 @endsection
 @push('js')
     <script>
+        function loadWards (id, step){
+            var url = '/admin/district/' + id + '/wards'
+            axios.get(url)
+                .then((res) => {
+                    var html = ''
+                    res.data.forEach((ward) => {
+                        html += `<option value="${ward.id}">${ward.name}</option>`
+                    })
+                    $('.step' + step + ' .ward').html(html)
+                })
+                .catch((res) => {
+                    console.log(res);
+                })
+        }
+
         $('#ward').change(function(){
             $('#step1-next').removeAttr('disabled')
         })
@@ -223,7 +290,23 @@
             }
         })
         $('#send-mail').click(function(){
-            $('#email-confirm').removeAttr('disabled')
+            $('#send-mail').text("Đang gửi");
+            axios.post('/send-verify-mail', {email: $('.step2 #email').val()})
+                .then((res) => {
+                    if (res.data == 1){
+                        $('.status').text("Mã xác thực đã được gửi vào email của bạn.")
+                        $('.status').addClass('text-success')
+                        $('#email-confirm').removeAttr('disabled')
+                        $('#send-mail').text("Gửi lại");
+                    }
+                })
+                .catch((res) => {
+                    $('.status').text("Có lỗi phát sinh, vui lòng thử lại.")
+                    $('.status').addClass('text-danger')
+                    $('#email-confirm').removeAttr('disabled')
+                    $('#send-mail').text("Gửi lại");
+                })
+            
         })
         $('.step2 #email-confirm').change(function(){
             if ($(this).val()){
@@ -231,10 +314,22 @@
             }
         })
         $('#step2-next').click(function(){
-            $('.step2').addClass('d-none')
-            $('.step3').removeClass('d-none')
-            $('.step-item2').removeClass('active')
-            $('.step-item3').addClass('active')
+            axios.post('/verify-email', {token: $('.step2 #email-confirm').val(), email: $('.step2 #email').val()})
+                .then((res) => {
+                    if (res.data == 1){
+                        $('.step2').addClass('d-none')
+                        $('.step3').removeClass('d-none')
+                        $('.step-item2').removeClass('active')
+                        $('.step-item3').addClass('active')
+                    } else {
+                        $('.status').text("Mã xác thực không chính xác.")
+                        $('.status').addClass('text-danger')
+                    }
+                })
+                .catch((res) => {
+                    console.log(res);
+                })
+            
         })
         $('#proof-upload').change(function(){
             var reader = []
@@ -244,7 +339,7 @@
                 reader[i] = new FileReader()
                 reader[i].onload = function(e){
                     html = `<img src="${e.target.result}" alt="" class="file-upload-image mb-2" style="margin-right: 8px" width="120px">`
-                    $('.proof-img-container').append(html);
+                    $('.proof-img-container').html(html);
                 }
                 reader[i].readAsDataURL(this.files[i]);
             }
@@ -279,8 +374,11 @@
                 $('#step4-next').removeAttr('disabled')
             }
         })
-        $('#step4-next').click(function(){
-            swal("Thành công!", "Đơn xin cấp giấy của bạn đang chờ phê duyêt.", "success");
-        })
+        
     </script>
+    @if (Session::has('status') && Session::get('status') == 1)
+        <script>
+            swal("Thành Công!", "Theo dõi email để nhận thông báo mới nhất!", "success")
+        </script>
+    @endif
 @endpush

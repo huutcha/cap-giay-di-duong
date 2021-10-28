@@ -12,7 +12,7 @@ class Account extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillable = ['username', 'password', 'role', 'email'];
+    protected $fillable = ['username', 'password', 'role', 'email', 'avatar'];
 
     public function human () {
         return $this->hasOne(Human::class);

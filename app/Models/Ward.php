@@ -18,6 +18,10 @@ class Ward extends Model
         return $this->hasMany(Human::class);
     }
 
+    public function organ () {
+        return $this->hasMany(Organ::class);
+    }
+
     public function getActiveTextAttribute () {
         if ($this->active == 0){
             return "Chưa kích hoạt";

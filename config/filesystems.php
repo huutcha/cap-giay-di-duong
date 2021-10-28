@@ -60,6 +60,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'verifies' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/verifies'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

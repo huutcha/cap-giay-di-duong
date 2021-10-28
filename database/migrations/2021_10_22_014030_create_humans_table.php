@@ -22,7 +22,7 @@ class CreateHumansTable extends Migration
             $table->string('hometown');
             $table->string('phone');
             $table->string('cccd');
-            $table->string('avatar');
+            
             
             $table->string('address')->nullable();
             $table->unsignedBigInteger('ward_id')->nullable();

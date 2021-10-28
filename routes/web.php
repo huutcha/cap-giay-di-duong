@@ -20,6 +20,11 @@ use App\Http\Controllers\Admin\WardController;
 */
 
 Route::get('/', [ApplicationController::class, 'create']);
+Route::post('/send-verify-mail', [ApplicationController::class, 'sendVerifyEmail']);
+Route::post('/verify-email', [ApplicationController::class, 'verifyEmail']);
+Route::post('/applications', [ApplicationController::class, 'store']);
+
+
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AuthenticateController::class, 'loginForm'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'login']);
@@ -27,6 +32,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/forgot-password', [AuthenticateController::class, 'forgotPassword']);
     Route::get('/reset-password/{token}', [AuthenticateController::class, 'resetForm'])->name('password.reset');
     Route::put('/reset-password', [AuthenticateController::class, 'reset']);
+    
+    Route::get('/district/{id}/wards', [WardController::class, 'index']);
     Route::middleware('auth')->group(function () {
         Route::get('/', function () {
             return view('backend.index');
@@ -37,7 +44,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/unit', [UnitController::class, 'index']);
         Route::put('/district', [DistrictController::class, 'update']);
         Route::put('/ward', [WardController::class, 'update']);
-        Route::get('/district/{id}/wards', [WardController::class, 'index']);
         Route::get('/district/{id}/wards/active-all', [WardController::class, 'activeAll']);
 
         Route::get('/users', [UserController::class, 'index']);
