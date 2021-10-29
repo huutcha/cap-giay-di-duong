@@ -109,4 +109,9 @@ class UserController extends Controller
         $user->delete();
         return 1;
     }
+
+    public function show ($id){
+        $user = Account::find($id);
+        return view('backend.users.profile', compact('user'));
+    }
 }

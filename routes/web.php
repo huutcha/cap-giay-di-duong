@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\WardController;
 use App\Http\Controllers\Admin\ApplicationAdminController;
+use App\Http\Controllers\Admin\ConfirmHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,10 +55,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/{id}', [UserController::class, 'edit']);
         Route::put('/users/{id}', [UserController::class, 'update']);
         Route::delete('/users', [UserController::class, 'destroy']);
+        Route::get('/users/{id}/profile', [UserController::class, 'show']);
 
         Route::get('/applications', [ApplicationAdminController::class, 'index']);
         Route::get('/applications/{id}', [ApplicationAdminController::class, 'edit']);
         Route::put('/applications/{id}', [ApplicationAdminController::class, 'update']);
         Route::get('/applications/{id}/pdf', [ApplicationAdminController::class, 'pdf']);
+        Route::get('/confirm-history', [ConfirmHistoryController::class, 'index']);
     });
 });

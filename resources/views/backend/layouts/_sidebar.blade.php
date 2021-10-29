@@ -11,10 +11,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-              <img src="{{asset('assets/img/unnamed.png')}}" class="img-circle elevation-2" alt="User Image" />
+              <img src="{{asset(Auth::user()->role == 0 ? 'assets/img/unnamed.png' : 'storage/avatars/'.Auth::user()->avatar)}}" class="img-circle elevation-2" alt="User Image" />
           </div>
           <div class="info">
-              <a href="{{url('admin/profile')}}" class="d-block">Hữu Đinh</a>
+              <a href="{{url('admin/profile')}}" class="d-block">{{Auth::user()->human->full_name}}</a>
           </div>
       </div>
 
@@ -66,7 +66,7 @@
             @endif
               
               <li class="nav-item">
-                  <a href="####" class="nav-link">
+                  <a href="{{url('/admin/confirm-history')}}" class="nav-link">
                     <i class="nav-icon far fa-calendar-check"></i>
                       <p>
                           Lịch sử cấp giấy
