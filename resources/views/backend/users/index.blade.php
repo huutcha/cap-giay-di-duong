@@ -108,7 +108,7 @@
                         id: $(this).data('user')
                     }})
                     .then((res) => {
-                        swal("Poof! Your imaginary file has been deleted!", {
+                        swal("Xóa người dùng thành công!", {
                             icon: "success",
                         });
                         window.location.reload()

@@ -18,4 +18,8 @@ class Organ extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function getFullAddressAttribute () {
+        return $this->ward->name.', '.$this->ward->district->name.', Thành phố Hà Nội';
+    }
+
 }

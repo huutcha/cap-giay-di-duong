@@ -18,6 +18,10 @@ class Account extends Authenticatable
         return $this->hasOne(Human::class);
     }
 
+    public function confirmHistory () {
+        return $this->hasMany(ConfirmHistory::class);
+    }
+
     public function getRoleTextAttribute () {
         if ($this->role == 0){
             return "Cán bộ thành phố";

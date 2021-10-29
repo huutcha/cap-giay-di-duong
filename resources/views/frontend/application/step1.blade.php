@@ -65,7 +65,7 @@
                         <select id="district" onchange="loadWards($(this).val(), 1)" class="form-control" style=" height: 46px" >
                             <option value="">--Chọn quận, huyện--</option>
                             @foreach ($districts as $district)
-                                <option value="{{$district->id}}">{{$district->name}}</option>
+                                <option value="{{$district->id}}" {{$district->active == 0 ? 'disabled' : ''}}>{{$district->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -258,7 +258,12 @@
                 .then((res) => {
                     var html = ''
                     res.data.forEach((ward) => {
-                        html += `<option value="${ward.id}">${ward.name}</option>`
+                        if (step == 4){
+                            html += `<option value="${ward.id}">${ward.name}</option>`
+                        } else {
+                            html += `<option value="${ward.id}" ${ward.active == 0 ? 'disabled' : ''}>${ward.name}</option>`
+
+                        }
                     })
                     $('.step' + step + ' .ward').html(html)
                 })

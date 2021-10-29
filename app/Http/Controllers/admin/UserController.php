@@ -68,15 +68,14 @@ class UserController extends Controller
     public function store(Request $request){
         $inputs = $request->input();
         $file = $request->file('avatar');
-        // dd($file->getClientOriginalName());
-        $user = Account::create($inputs);
-        $inputs = array_merge($inputs, ['account_id' => $user->id]);
         if ($file){
             if (Storage::disk('avatars')->missing($file->getClientOriginalName())) {
                 $file->storeAs('', $file->getClientOriginalName(), 'avatars');
             }
             $inputs = array_merge($inputs, ['avatar' => $file->getClientOriginalName()]);
         }
+        $user = Account::create($inputs);
+        $inputs = array_merge($inputs, ['account_id' => $user->id]);
         // dd($inputs);
         $human = Human::create($inputs);
         return redirect('/admin/users');

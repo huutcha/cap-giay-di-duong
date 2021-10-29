@@ -37,22 +37,34 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-              <li class="nav-item">
-                  <a href="{{url('/admin/unit')}}" class="nav-link">
+            @if (Auth::user()->role <= 1)
+                <li class="nav-item">
+                    <a href="{{url('/admin/unit')}}" class="nav-link">
                     <i class="nav-icon fas fa-university"></i>
-                      <p>
-                          Đơn vị
-                      </p>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a href="{{url('/admin/users')}}" class="nav-link">
+                        <p>
+                            Đơn vị
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('/admin/users')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
-                      <p>
-                          Quản lý cán bộ
-                      </p>
-                  </a>
-              </li>
+                        <p>
+                            Quản lý cán bộ
+                        </p>
+                    </a>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a href="{{url('/admin/applications')}}" class="nav-link">
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <p>
+                            Quản lý đơn cấp
+                        </p>
+                    </a>
+                </li>
+            @endif
+              
               <li class="nav-item">
                   <a href="####" class="nav-link">
                     <i class="nav-icon far fa-calendar-check"></i>

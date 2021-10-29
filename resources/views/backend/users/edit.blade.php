@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 avatar-preview">
-                            <img src="{{asset('storage/avatars/'.$user->human->avatar)}}" width="60" alt="">
+                            <img src="{{asset('storage/avatars/'.$user->avatar)}}" width="60" alt="">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Lưu thay đổi</button>

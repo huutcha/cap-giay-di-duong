@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light justify-content-between">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
       <li class="nav-item">
@@ -7,9 +7,11 @@
       </li>
       
   </ul>
-
+  <div class="area">
+      <strong style="text-transform: uppercase">{{Auth::user()->work_unit}}</strong>
+  </div>
   <!-- Right navbar links -->
-  <ul class="navbar-nav ml-auto">
+  <ul class="navbar-nav">
       
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">

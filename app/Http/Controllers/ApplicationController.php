@@ -78,4 +78,5 @@ class ApplicationController extends Controller
         return redirect('/');
 
     }
+
 }

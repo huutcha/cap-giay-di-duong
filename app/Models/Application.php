@@ -11,11 +11,15 @@ class Application extends Model
     protected $fillable = ['human_id', 'reason', 'reason_desc', 'organ_id', 'duration', 'email'];
 
     public function human () {
-        return $this->belongsTo(Human::class,);
+        return $this->belongsTo(Human::class);
     }
 
     public function organ () {
-        return $this->belongsTo(Organ::class,);
+        return $this->belongsTo(Organ::class);
+    }
+
+    public function confirmHistory () {
+        return $this->hasOne(ConfirmHistory::class);
     }
     
 
