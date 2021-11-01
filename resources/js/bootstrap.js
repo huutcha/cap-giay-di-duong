@@ -10,6 +10,16 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+try {
+    window.Popper = require('popper.js').default;
+    window.$ = window.jQuery = require('jquery');
+
+    require('admin-lte/plugins/bootstrap/js/bootstrap')
+    require('admin-lte/plugins/select2/js/select2.full')
+
+    // AdminLTE code here.
+    require('admin-lte');
+} catch (e) {}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
