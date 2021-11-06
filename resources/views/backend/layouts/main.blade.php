@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title')</title>
-        {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png')}}" /> --}}
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo-ha-noi.png')}}" />
         <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
         @stack('link-css')
         @stack('css')

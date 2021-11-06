@@ -344,7 +344,7 @@
                 reader[i] = new FileReader()
                 reader[i].onload = function(e){
                     html = `<img src="${e.target.result}" alt="" class="file-upload-image mb-2" style="margin-right: 8px" width="120px">`
-                    $('.proof-img-container').html(html);
+                    $('.proof-img-container').append(html);
                 }
                 reader[i].readAsDataURL(this.files[i]);
             }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Account;
 use App\Models\District;
 use App\Models\Human;
+
 class UserController extends Controller
 {
     public function showProfile(){
@@ -33,7 +34,7 @@ class UserController extends Controller
     public function index () {
         if (Auth::user()->role == 0){
             $users = Account::all();
-            $users = $users->diff(Account::where('id', 1)->get());
+            $users = $users->diff(Account::where('role', 0)->get());
         }
         if (Auth::user()->role == 1){
             $id = Auth::user()->human->ward->district->id;

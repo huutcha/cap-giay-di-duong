@@ -5,7 +5,9 @@
 @section('content-title')
     Cán bộ
 @endsection
-
+@push('link-css')
+    <link rel="stylesheet" href="{{asset('assets/css/unit.css')}}">
+@endpush
 @push('css')
     <style>
         .card-header::after{
@@ -93,6 +95,7 @@
 @endsection
 @push('js')
     <script>
+        $('#account-table').DataTable()
         $('.delete').click(function(){
             var url = '/admin/users'
             swal({

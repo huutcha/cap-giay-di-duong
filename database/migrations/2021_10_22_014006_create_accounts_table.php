@@ -19,7 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('password');
             $table->integer('role');
             $table->string('email');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->date('email_verified_at')->nullable();
             $table->timestamps();
