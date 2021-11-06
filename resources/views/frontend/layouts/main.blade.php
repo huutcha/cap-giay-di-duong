@@ -8,6 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title')</title>
         {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png')}}" /> --}}
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo-ha-noi.png')}}" />
         <link rel="stylesheet" href="{{asset('vendors/bootstrap-5.1.2-dist/css/bootstrap.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

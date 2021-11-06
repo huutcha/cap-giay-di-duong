@@ -5,6 +5,7 @@ Thông tin cá nhân
 @section('content-title')
     Hồ sơ
 @endsection
+
 @section('content')
     <!-- Main content -->
 <section class="content">

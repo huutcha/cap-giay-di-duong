@@ -49,10 +49,10 @@ class ConfirmHistory extends Model
     }
 
     public function getStateTextAttribute(){
-        if($this->state = 'accept'){
+        if($this->state == 'accept'){
             return 'Chấp thuận';
         }
-        if($this->state = 'cancel'){
+        if($this->state == 'cancel'){
             return 'Từ chối';
         }
     }

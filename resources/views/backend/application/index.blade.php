@@ -39,9 +39,9 @@
                             <tr>
                                 <td>{{$application->id}}</td>
                                 <td>{{$application->human->full_name}}</td>
-                                <td>{{$application->created_at}}</td>
+                                <td>{{date_format($application->created_at, "d/m/Y")}}</td>
                                 <td>{{$application->reason}}</td>
-                                <td>{{$application->duration}}</td>
+                                <td>{{date_format(date_create($application->duration), "d/m/Y")}}</td>
                                 <td>
                                     <a href="{{url('/admin/applications/'.$application->id)}}" class="btn btn-primary">Chi tiết</a>
                                 </td>
